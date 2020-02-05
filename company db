@@ -1,0 +1,53 @@
+package prgm1;
+import java.sql.*;
+import java.util.Scanner;
+public class MysqlCon1 {
+	public static void main(String args[]){
+		try{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Company","root","");
+		//here sonoo is database name,root is username and password
+		Statement stmt=con.createStatement();
+		Scanner k =new Scanner(System.in);
+		System.out.println("enter SSN");
+		int SSN=k.nextInt();
+		System.out.println("enter Name");
+		String Name=k.next();
+		System.out.println("enter Address");
+		String Address=k.next();
+		System.out.println("enter sex");
+		String Sex=k.next();
+		System.out.println("enter salary");
+		int Salary=k.nextInt();
+		System.out.println("enter superssn");
+		int SuperSSN=k.nextInt();
+		System.out.println("enter dno");
+		int DNo=k.nextInt();
+		//Inserting data using SQL query
+		String sql="insert into employee values("+SSN+",'"+Name+"','"+Address+"','"+Sex+"',"+Salary+","+SuperSSN+","+DNo+")";
+		try
+		{
+		 Statement st=con.createStatement();
+		 int m=st.executeUpdate(sql);
+		 if(m == 1)
+			 System.out.println("inserted successfully : "+sql);
+		 else
+			 System.out.println("insertion failed");
+		}
+		catch(Exception ex)
+		{
+			System.err.println(ex);
+		}
+		ResultSet rs=stmt.executeQuery("select salary*1.1 as salary from employee where dno=3");
+		while(rs.next())
+			System.out.println(rs.getString(2));
+			//System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getInt(5)+" "+rs.getInt(6)+" "+rs.getInt(7));
+		con.close();
+		}catch(Exception e){ System.out.println(e);}
+
+		}
+		}
+
+
+	
+
